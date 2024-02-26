@@ -1,0 +1,46 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+<br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-dark p-4 mx-auto bg-light">
+                <h2 class="text-center mb-4" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Update Profile</h2>
+                <div style="text-align: center;">
+                {% if request.user.userprofile.is_employer %}
+                    {# Render Employer Profile Form #}
+                    <form method="post" enctype="multipart/form-data" style="max-width: 400px; margin: 0 auto;">
+                        {% csrf_token %}
+                        
+                        {% for field in form %}
+                          <div style="margin-bottom: 15px;">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label><br>
+                            {{ field }}
+                          </div>
+                        {% endfor %}
+                  
+                        <button type="submit" class="btn btn-primary">Save</button>
+                      </form>
+                {% else %}
+                    {# Render Job Seeker Profile Form #}
+                    
+                        <form method="post" enctype="multipart/form-data" style="max-width: 400px; margin: 0 auto;">
+                          {% csrf_token %}
+                          
+                          {% for field in form %}
+                            <div style="margin-bottom: 15px;">
+                              <label for="{{ field.id_for_label }}">{{ field.label }}</label><br>
+                              {{ field }}
+                            </div>
+                          {% endfor %}
+                    
+                          <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                      </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

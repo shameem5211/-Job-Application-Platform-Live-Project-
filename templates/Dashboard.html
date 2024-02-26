@@ -1,0 +1,79 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Dashboard.css' %}">
+<style>
+    .rejected {
+        color: red;
+    }
+    
+    .pending {
+        color: rgb(10, 76, 28);
+    }
+    
+</style>
+<br>
+<h2 class="title" style="text-align: center; font-family: Verdana, Geneva, Tahoma, sans-serif;">Dashboard</h2>
+
+
+{% if request.user.userprofile.is_employer %}
+<br>
+<div class="text-center">
+    <a href="{% url 'Add_Job' %}" class="btn btn-success" style="display: inline-block; margin: 0 auto;">Add Job</a>
+</div>
+<br>
+
+            
+        
+<div class="container-grid">
+    
+    <div class="grid-container" id="applied-jobs">
+        {% for job in jobs reversed %}
+            <div class="job-card">
+                <div class="job-details">
+                    <strong>{{ job.title }}</strong> <br>
+                    <strong>{{ job.company_name }}</strong> <br>
+                    <strong>{{job.company_address}}</strong><br>
+                    <strong>{{job.company_country}}</strong>
+                    <p>Posted @{{ job.created_at|date:"F j, Y" }}</p>
+                    <p style="color:blue">({{job.status}})</p>
+                </div>
+                <a href="{% url 'Job_Detail' job.id %}"><button class="view-job-button">View Job</button></a>
+            </div>
+            {% empty %}
+            <p>You don't have any jobs yet...</p>
+    {% endfor %}
+
+    </div>
+    </div>
+    {% else %}
+    <br>
+        <h4 class="subtitle">Applied Jobs</h4><br>
+        <div class="container-grid">
+    
+            <div class="grid-container" id="applied-jobs">
+        {% for application in request.user.applications.all reversed %}
+        <div class="job-card">
+            <div class="job-details">
+                <strong>{{ application.job.title }}</strong> <br>
+                <strong>{{ application.job.company_name }}</strong> <br>
+                <strong>{{application.job.company_address}}</strong><br>
+                <strong>{{application.job.company_country}}</strong>
+                <p>Posted @{{ application.job.created_at|date:"F j, Y" }}</p>
+                <p class="{% if application.status == 'rejected' %}rejected{% else %}pending{% endif %}">
+                    <strong>{{ application.status|capfirst }}</strong>
+                 </p>
+                <p style="color:blue">({{application.job.status}})</p>
+            </div>
+            <a href="{% url 'Job_Detail' application.job.id %}"><button class="view-job-button">View Job</button></a>
+            <a href="{% url 'View_Application' application.id %}"><button class="view-job-button">Status</button></a>
+        </div>
+        {% empty %}
+            <p>You haven't applied for any jobs yet...</p>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'Admin/Dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .rejected {
+        color: red;
+    }
+    
+    .pending {
+        color:rgb(10, 76, 28);
+    }
+</style>
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+<h2 class="text-center mb-4" style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Candidates</h2>
+
+<br>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+<table class="table table-bordered table-striped">
+    <thead  >
+        <tr class="table-dark"> 
+            <div class="table-color"><th scope="col" >ID</th> </div>
+            <th scope="col">username</th>
+            <th scope="col">status</th>
+            <th scope="col">Profile</th>
+            <th scope="col">Application</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <div class="move">
+            {% for application in job.applications.all %}
+        <tr id="1" name="1">
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{ application.created_by.username }}</td>
+            <td><p class="{% if application.status == 'rejected' %}rejected{% else %}pending{% endif %}"><strong>{{ application.status|capfirst }}</strong></p></td>
+            <td><a href="{% url 'Candidate_Profile' candidate_id=application.created_by.id %}"><button class="btn btn-info btn-sm">Profile</button></a></td>
+            <td><a href="{% url 'Application_View' application.id %}"><button class="btn btn-success btn-sm">View</button></a></td>
+            
+            
+        </tr>
+        {% endfor %}
+        </div>
+        
+            </div>
+    </tbody>
+</table>		 
+</div>
+</div>
+</div>
+{% endblock %}

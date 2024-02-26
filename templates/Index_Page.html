@@ -1,0 +1,40 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/Index_Page.css' %}">
+<link rel="stylesheet"  href="{% static 'css/Dashboard.css' %}">
+    <br>
+    <h2 class="title">Latest Jobs</h2><br>
+    {% if request.user.is_authenticated %}
+    <form method="get" action="{% url 'Search_Job' %}" >
+        <div class="input-group mb-3">
+            <input type="text" name="q" placeholder="Search by Job Title" value="{{ query }}" class="form-control">
+            <div class="input-group-append">
+                <button style="margin-left: 3px;" class="btn btn-outline-success" type="submit">Search</button>
+            </div>
+        </div>
+    </form><br>
+    {% endif %}
+
+    <div class="container-grid">
+    
+        <div class="grid-container" id="applied-jobs">
+            {% for job in jobs  %}
+                <div class="job-card">
+                    <div class="job-details">
+                        <strong>{{ job.title }}</strong> <br>
+                        <strong>{{ job.company_name }}</strong> <br>
+                        <strong>{{job.company_address}}</strong><br>
+                        <strong>{{job.company_country}}</strong>
+                        <p>Posted @{{ job.created_at|date:"F j, Y" }}</p>
+                        <p style="color:blue">({{job.status}})</p>
+                    </div>
+                    <a href="{% url 'Job_Detail' job.id %}"><button class="view-job-button">View Job</button></a>
+                </div>
+                {% empty %}
+                <p>You don't have any jobs yet...</p>
+        {% endfor %}
+    
+        </div>
+        </div>
+{% endblock %}

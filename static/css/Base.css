@@ -1,0 +1,7 @@
+.navbar {
+    height: 70px; /* Set your fixed height for the navbar */
+}
+
+.navbar-brand img {
+    max-height: 100%; /* Allow the logo to grow within the fixed navbar height */
+}

@@ -1,0 +1,51 @@
+{% extends 'Admin/Dashboard.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+<h2 class="text-center mb-4" style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Candidates</h2>
+
+<br>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+<table class="table table-bordered table-striped">
+    <thead  >
+        <tr class="table-dark"> 
+            <div class="table-color"><th scope="col" >ID</th> </div>
+            <th scope="col">Photo</th>
+            <th scope="col">Name</th>
+            <th scope="col">Profession</th>
+            <th scope="col">Email</th>
+            <th scope="col">Qualification</th>
+            <th scope="col">Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        <div class="move">
+        {% for candidate in candidates %}
+        <tr id="1" name="1">
+            <th scope="row">{{forloop.counter}}</th>
+            {% if candidate.profile_pic %}
+                <td><a href="{% url 'Candidate_Profile' candidate.id %}"><img class="dp" src="{{candidate.profile_pic.url}}" alt=""></a></td>
+            {% else %}
+                 <!-- You can provide a placeholder image or some default content here -->
+                <td>Not Updated</td>
+            {% endif %}
+            <td><a href="{% url 'Candidate_Profile' candidate.id %}" style="text-decoration: none; color:black">{{ candidate.full_name }}</a></td>
+            <td>{{candidate.job_title}}</td>
+            <td>{{candidate.email}}</td>
+            <td>{{candidate.qualification}}</td>
+            <td>{{candidate.location}}</td>
+            
+        </tr>
+        {% endfor %}
+        </div>
+        
+            </div>
+    </tbody>
+</table>		 
+</div>
+</div>
+</div>
+{% endblock %}

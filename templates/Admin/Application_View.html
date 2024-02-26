@@ -1,0 +1,63 @@
+{% extends 'Admin/Dashboard.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .rejected {
+        color: red;
+        font-size: larger;
+    }
+    
+    .pending {
+        color:rgb(10, 76, 28);
+        font-size: larger;
+
+    }
+    @media (min-width: 1200px) {
+        .container{
+            margin-left: 220px;
+        }
+    }
+</style>
+
+    <div class="container mt-5">
+        <h3 class="subtitle">{{ application.job.title }}</h3>
+
+        <small class="d-block mb-4">Date added: {{ application.created_at }}</small>
+
+        <div class="mb-4">
+            <strong>Candidate:</strong><br>
+            <p>{{ application.created_by.username }}</p>
+        </div>
+        <div class="mb-4">
+            <strong>Content:</strong><br>
+            <p>{{ application.content }}</p>
+        </div>
+
+        <div class="mb-4">
+            <strong>Experience:</strong><br>
+            <p>{{ application.experience }}</p>
+        </div>
+            
+        <br>
+        <hr class="my-5">
+
+        <h2 class="subtitle">Conversation</h2>
+
+        {% for message in application.conversationmessages.all %}
+            <div class="notification mt-3">
+                <b>{{ message.created_by.username }} - {{ message.created_at|timesince }} ago</b><br>
+                {{ message.content }}
+            </div>
+        {% empty %}
+            <p class="mt-3">No messages yet...</p>
+
+            <hr>
+        {% endfor %}
+        
+        
+        <br><br><br>
+    </div>
+
+    
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Career Bouwen</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<style>
+
+.navbar-brand img {
+    max-height: 100%; /* Allow the logo to grow within the fixed navbar height */
+}
+ /* Customize the toggle button color */
+ .navbar-toggler {
+    background-color: #454545 !important;
+    border-color: #454545 !important;
+}
+
+/* Customize the toggle icon color */
+.navbar-toggler-icon {
+    background-color: #454545 !important;
+}
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(218, 224, 227);">
+    <div class="container px-4">
+      <a class="navbar-brand" href="/">
+        <img src="{% static 'images/Logo.png' %}" alt="" height="50">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+          class="navbar-toggler-icon "></span></button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% if request.user.is_authenticated %}
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          {% if not request.user.userprofile.is_employer %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'Index_Page' %}" style="color: black;">Home</a></li>
+          {% endif %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'Dashboard' %}" style="color: black;">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'Notifications' %}" style="color: black;">Notifications ({{ notifications.count }})</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'Profile_Page' %}" style="color: black;">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'SignOut' %}" ><button class="btn btn-outline-danger btn-sm">Logout</button></a></li>
+        </ul>
+        {% else %}
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="{% url 'Signup' %}" ><button class="btn btn-outline-success btn-sm">SignUp</button></a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'SignIn' %}" style="color: black;">Login</a></li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+    <div class="container">
+      {% block content %}{% endblock %}
+  </div>
+
+
+
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends 'Admin/Dashboard.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+<h2 class="text-center mb-4" style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Employers</h2>
+
+<br>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+<table class="table table-bordered table-striped">
+    <thead  >
+        <tr class="table-dark"> 
+            <div class="table-color"><th scope="col" >ID</th> </div>
+            <th scope="col">Photo</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Category</th>
+            <th scope="col">Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <div class="move">
+        {% for employer in employers %}
+        <tr id="1" name="1">
+            <th scope="row">{{forloop.counter}}</th>
+            {% if employer.profile_pic %}
+                <td><a href="{% url 'Employer_Profile' employer.id %}"><img class="dp" src="{{employer.profile_pic.url}}" alt=""></a></td>
+            {% else %}
+                 <!-- You can provide a placeholder image or some default content here -->
+                <td>Not Updated</td>
+            {% endif %}
+            <td><a href="{% url 'Employer_Profile' employer.id %}" style="text-decoration: none; color:black">{{ employer.company_name }}</a></td>
+            <td>{{employer.email}}</td>
+            <td>{{employer.company_category}}</td>
+            <td>{{employer.company_address}}</td>
+            
+        </tr>
+        {% endfor %}
+        </div>
+        
+            </div>
+    </tbody>
+</table>		 
+</div>
+</div>
+</div>
+{% endblock %}

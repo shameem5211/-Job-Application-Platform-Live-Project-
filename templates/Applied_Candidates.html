@@ -1,0 +1,36 @@
+{% extends 'Base.html' %}
+{% load static  %}
+{% block content %}
+<style>
+    .rejected {
+        color: red;
+    }
+    
+    .pending {
+        color:rgb(10, 76, 28);
+    }
+    
+</style>
+    <div class="container mt-5">
+        <h4 class="text-center mb-4" style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Applied Candidates</h4>
+
+        {% for application in job.applications.all %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ application.created_by.username }}</h5>
+                    <p class="card-text"><strong>Application Content : </strong>{{ application.content }}</p>
+                    <p class="card-text"><strong>Experience : </strong>{{ application.experience }}</p>
+                    <!-- Add other details as needed -->
+                    <p class="{% if application.status == 'rejected' %}rejected{% else %}pending{% endif %}">
+                       <strong>{{ application.status|capfirst }}</strong>
+                    </p>
+                    <!-- You can also include buttons or links for further actions -->
+                    <a href="{%  url 'View_Candidate_Profile' candidate_id=application.created_by.id %}" class="btn btn-primary">View Profile</a>
+                    <a href="{% url 'View_Application' application.id %}" class="btn btn-info">View Application</a>
+
+                    
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

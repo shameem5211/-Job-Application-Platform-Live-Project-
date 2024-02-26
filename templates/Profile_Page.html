@@ -1,0 +1,189 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block content %}
+{% if not request.user.userprofile.is_employer %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/Profile_Page.css' %}">
+    {% endif %}
+
+{% if request.user.userprofile.is_employer %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Profile.css' %}">
+{% endif %}
+
+<br><br>
+{% if request.user.userprofile.is_employer %}
+<h3>Employer</h3>
+
+<section class="vh-100" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-6 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 gradient-custom text-center text-white"
+                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                <img src="{{profile_pic}}"
+                  alt="{% static 'images/avatar7.png' %}" class="img-fluid my-5" style="width: 150px;" />
+                <h5>{{company_name}}</h5>
+                <i class="far fa-edit mb-5"></i>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body p-4">
+                  <h6>Information</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p class="text-muted">{{email}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Phone</h6>
+                      <p class="text-muted">{{contact_number}}</p>
+                    </div>
+                  </div>
+                  <h6>Overview</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Category</h6>
+                      <p class="text-muted">{{company_category}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Address</h6>
+                      <p class="text-muted">{{company_address}}</p>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-start">
+                    &nbsp;&nbsp;&nbsp;<a href="{% url 'Edit_Profile' %}" class="btn btn-outline-dark" style="align-items: center;">Edit Profile</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+{%else %}
+<h3>Jobseeker</h3>
+
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="{{profile_pic}}" alt=""/>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                            <h5>
+                                {{full_name}}
+                            </h5>
+                            <h6>
+                                {% if job_title %}
+                                {{job_title}}
+                                {% else %}
+                                Update Job Title
+                                {% endif %}
+                            </h6>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a href="{% url 'Edit_Profile' %}" class="btn btn-outline-dark">Edit Profile</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                
+            </div>
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>User Id</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{request.user}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Name</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{full_name}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{email}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Phone</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{contact_number}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Profession</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{job_title}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Qualification</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{qualification}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Location</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{location}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>CV</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% if cv %}
+                                            <p><a href="{{ cv }}" target="_blank">View/Download CV</a></p>
+                                        {% else %}
+                                            <p>No CV uploaded.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>           
+</div>
+
+{% endif %}
+
+{% endblock %}

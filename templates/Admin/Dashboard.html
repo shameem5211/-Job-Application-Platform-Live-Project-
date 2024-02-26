@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Admin Panel</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/admin.css' %}" rel="stylesheet">
+  {% block style %} 
+  <style>
+    @media (min-width: 1200px) {
+      .card-group{
+        margin-left: 220px;
+        margin-top: 80px;
+        width: 900px;
+      }
+  }
+  </style>
+  {% endblock %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+
+  <!-- Favicons -->
+ 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+ <style>
+    body{
+        background-color: #f5e7e3;
+    }
+ </style>
+</head>
+
+<body>
+
+  <!-- ======= Mobile nav toggle button ======= -->
+  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="d-flex flex-column">
+      <div class="profile">
+        <a href=""><img src="{% static 'images/Logo.png' %}" alt="" ></a>
+        <br><br><br><br>
+        
+      <nav id="navbar" class="nav-menu navbar">
+        <ul>
+          
+          <li><a href="{% url 'Admin_Dashboard' %}" class="nav-link scrollto active"><i class="bx bx-home"></i><span>Home</span></a></li>
+          <li><a href="{% url 'All_Jobs' %}" class="nav-link scrollto"><i class="bx bx-group"></i> <span>Jobs</span></a></li>
+          <li><a href="{% url 'Employers' %}" class="nav-link scrollto"><i class="bx bx-briefcase"></i> <span>Employers</span></a></li>
+          <li><a href="{% url 'Candidates' %}" class="nav-link scrollto"><i class="bx bx-group"></i> <span>Candidates</span></a></li>
+          <li><a href="{% url 'Signout' %}" class="nav-link scrollto"><i class="bx bx-log-out"></i> <span><button class="btn btn-danger">Logout</button></span></a></li>
+
+
+        </ul>
+      </nav><!-- .nav-menu -->
+    </div>
+  </header><!-- End Header -->
+
+
+    {% block content %}
+
+    <div class="card-group">
+      <div class="card">
+        <img class="card-img-top" src="{% static 'images/Employer.jpg' %}" alt="Card image cap"><br><br>
+        <div class="card-body">
+          <h5 class="card-title">Employers</h5>
+          <p class="card-text">Our vibrant community currently includes {% if employers_count == 1 %}one active employer{% else %}a total of <strong>{{ employers_count }}</strong> engaged employers{% endif %}. </p>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{% static 'images/job-seeker.jpg' %}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Candidates</h5>
+          <p class="card-text">{% if candidates_count == 0 %}Currently, no talented individuals{% elif candidates_count == 1 %}One skilled candidate is{% else %}A diverse group of <strong>{{ candidates_count }}</strong> talented candidates are{% endif %} exploring exciting opportunities.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="{% static 'images/jobs.jpg' %}" alt="Card image cap"><br>
+        <div class="card-body">
+          <h5 class="card-title">Jobs</h5>
+          <p class="card-text">{% if jobs_count == 0 %}Currently, there are no job opportunities{% elif jobs_count == 1 %}There's a single job posting{% else %}A variety of <strong>{{ jobs_count }}</strong> job opportunities are{% endif %} available.</p>
+
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+
+
+  <script src="{% static 'javascript/admin.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+</body>
+
+</html>
